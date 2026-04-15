@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Financiamentos</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <div class="app">
+
+      <!-- ── Cabeçalho ──────────────────────────────────────────────────── -->
+      <div class="header">
+        <h1>Calculadora de Financiamento</h1>
+        <span class="version">v1.0</span>
+        <button class="theme-btn" id="themeToggle">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+          <span id="themeLabel">Claro</span>
+        </button>
+      </div>
+
+      <!-- ── Grid principal ─────────────────────────────────────────────── -->
+      <div class="grid">
+
+        <!-- Painel esquerdo: entrada de dados -->
+        <div class="panel">
+          <div class="panel-label">Calcular</div>
+
+          <div class="calc-type" id="calcType">
+            <button class="calc-btn active" data-type="financiamento">Financiamento</button>
+            <button class="calc-btn" data-type="meses">Nº de Meses</button>
+            <button class="calc-btn" data-type="taxa">Taxa de Juros</button>
+            <button class="calc-btn" data-type="prestacao">Prestação</button>
+          </div>
+
+          <div style="margin-top: 1.5rem">
+            <div class="panel-label">Dados</div>
+
+            <!-- Toggle de entrada -->
+            <div class="entrada-row" id="entradaToggleRow">
+              <label for="entradaToggle">Entrada?</label>
+              <div class="toggle" id="entradaToggle"></div>
+            </div>
+
+            <!-- Campo valor de entrada (oculto por padrão) -->
+            <div class="entrada-field hidden" id="entradaFieldWrap">
+              <div class="field">
+                <label>Valor da Entrada</label>
+                <div class="suffix">
+                  <input type="text" id="entrada" placeholder="0,00" inputmode="decimal" />
+                  <span>R$</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financiamento -->
+            <div class="field" id="fieldFinanciamento">
+              <label id="labelFinanciamento">
+                Financiamento <span class="target-indicator" id="tgtFin"></span>
+              </label>
+              <div class="suffix">
+                <input type="text" id="financiamento" placeholder="0,00" inputmode="decimal" />
+                <span>R$</span>
+              </div>
+            </div>
+
+            <!-- Taxa de Juros -->
+            <div class="field" id="fieldTaxa">
+              <label id="labelTaxa">
+                Taxa de Juros <span class="target-indicator" id="tgtTax"></span>
+              </label>
+              <div class="suffix">
+                <input type="text" id="taxa" placeholder="0,00" inputmode="decimal" />
+                <span>% a.m.</span>
+              </div>
+            </div>
+
+            <!-- Nº de Meses -->
+            <div class="field" id="fieldMeses">
+              <label id="labelMeses">
+                Nº de Meses <span class="target-indicator" id="tgtMes"></span>
+              </label>
+              <input type="text" id="meses" placeholder="0" inputmode="numeric" />
+            </div>
+
+            <!-- Prestação -->
+            <div class="field" id="fieldPrestacao">
+              <label id="labelPrestacao">
+                Prestação <span class="target-indicator" id="tgtPre"></span>
+              </label>
+              <div class="suffix">
+                <input type="text" id="prestacao" placeholder="0,00" inputmode="decimal" />
+                <span>R$</span>
+              </div>
+            </div>
+
+            <!-- Mensagem de erro -->
+            <div id="errorMsg" class="error-msg"></div>
+
+            <!-- Botões de ação -->
+            <div class="actions">
+              <button class="btn primary"   id="btnCalcular">Calcular</button>
+              <button class="btn secondary" id="btnTabela">Tabela</button>
+              <button class="btn danger"    id="btnLimpar">Limpar</button>
+              <button class="btn secondary" id="btnAjuda">Ajuda</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel direito: resultado -->
+        <div class="panel results">
+          <div class="panel-label">Resultado</div>
+          <div id="resultArea">
+            <div style="color:var(--text3);font-family:var(--mono);font-size:13px;padding:2rem 0;text-align:center;">
+              Preencha os dados e<br>clique em Calcular
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel inferior: tabela Price (oculto até calcular) -->
+        <div class="panel full" id="tablePanel" style="display:none">
+          <div class="table-section">
+            <button class="table-toggle" id="tableToggle">
+              <span>Tabela Price — Simulação de Prazos</span>
+              <span class="arrow">▼</span>
+            </button>
+            <div class="amort-table-wrap" id="tableWrap">
+              <table class="amort-table" id="amortTable">
+                <thead>
+                  <tr>
+                    <th>Meses</th>
+                    <th>Prestações</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="amortBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.grid -->
+
+      <!-- Relógio -->
+      <div class="footer-clock">
+        <span id="clock"></span>
+      </div>
+
+    </div><!-- /.app -->
+
+    <!-- ── Modal de ajuda ─────────────────────────────────────────────────── -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Ajuda — Calculadora de Financiamento v1.0</h2>
+          <button class="modal-close" id="closeHelp">Fechar</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="help-section-title">Como usar</div>
+
+          <div class="help-item">
+            <div class="help-icon">01</div>
+            <div class="help-text">
+              <strong>Escolha o que calcular</strong>
+              <p>Na seção "Calcular", selecione o campo que deseja descobrir:
+                Financiamento, Nº de Meses, Taxa de Juros ou Prestação. Esse campo
+                ficará destacado e será preenchido automaticamente pelo programa.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon">02</div>
+            <div class="help-text">
+              <strong>Digite os dados conhecidos</strong>
+              <p>Preencha os três campos que você já conhece e deixe em branco o
+                campo que deseja calcular — ele será o resultado.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon">03</div>
+            <div class="help-text">
+              <strong>O resultado aparece no painel</strong>
+              <p>Clique em "Calcular" e o resultado aparece no painel à direita,
+                junto com total pago, total de juros, custo efetivo e taxa anual
+                equivalente.</p>
+            </div>
+          </div>
+
+          <div class="help-section-title">Botões</div>
+
+          <div class="help-item">
+            <div class="help-icon" style="font-size:9px">CALC</div>
+            <div class="help-text">
+              <strong>Calcular</strong>
+              <p>Executa o cálculo com os dados preenchidos e exibe o resultado
+                imediatamente.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon" style="font-size:9px">TAB</div>
+            <div class="help-text">
+              <strong>Tabela</strong>
+              <p>Após calcular, mostra uma simulação de diferentes prazos: para cada
+                número de meses (de 1 até 20+), exibe qual seria a prestação e o total
+                pago. A linha correspondente ao prazo calculado fica destacada.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon" style="font-size:9px">LMP</div>
+            <div class="help-text">
+              <strong>Limpar</strong>
+              <p>Apaga todos os campos e resultados, reiniciando o programa para um
+                novo cálculo.</p>
+            </div>
+          </div>
+
+          <div class="help-section-title">Entrada (sinal)</div>
+
+          <div class="help-item">
+            <div class="help-icon">R$</div>
+            <div class="help-text">
+              <strong>Valor de entrada</strong>
+              <p>Ative o toggle "Entrada?" para informar um valor de entrada (sinal).
+                Esse valor será descontado do financiamento antes do cálculo, e o
+                programa trabalhará sobre o saldo restante.</p>
+            </div>
+          </div>
+
+          <div class="help-section-title">Fórmula utilizada — Tabela Price</div>
+
+          <div class="help-item">
+            <div class="help-icon" style="font-size:9px">PMT</div>
+            <div class="help-text">
+              <strong>Sistema Francês de Amortização</strong>
+              <p>Todas as prestações têm o mesmo valor. A fórmula é:
+                pmt = PV × i ÷ (1 − (1+i)^−n), onde PV é o valor financiado,
+                i a taxa mensal decimal e n o número de meses.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <p>
+            <strong>Autor:</strong> Rildo Júnior — rildojuniorcontato@gmail.com<br>
+            <strong>Crédito ao criador original:</strong> Francimar Barbosa da Silva<br>
+            <strong>Recriação web</strong> baseada no Francinvest 3.0 original
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

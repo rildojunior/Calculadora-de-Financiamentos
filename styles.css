@@ -1,0 +1,743 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+/* ── Temas ───────────────────────────────────────────── */
+:root {
+  --bg: #0f1117;
+  --surface: #161b27;
+  --surface2: #1d2535;
+  --border: #2a3348;
+  --border2: #3a4a6a;
+  --accent: #00d4aa;
+  --accent2: #0096ff;
+  --accent3: #ff6b35;
+  --text: #e8edf5;
+  --text2: #8a9ab8;
+  --text3: #4a5a78;
+  --green: #00d4aa;
+  --red: #ff4d6d;
+  --yellow: #e6a800;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+:root.light {
+  --bg: #f0f2f7;
+  --surface: #ffffff;
+  --surface2: #e8ecf4;
+  --border: #cdd4e5;
+  --border2: #a0aec8;
+  --accent: #009978;
+  --accent2: #0070cc;
+  --text: #1a2236;
+  --text2: #4a5878;
+  --text3: #8a98b8;
+  --red: #d93055;
+  --yellow: #b87800;
+}
+
+/* ── Layout base ─────────────────────────────────────── */
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.app {
+  width: 100%;
+  max-width: 760px;
+}
+
+/* ── Cabeçalho ───────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+.header .version {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.theme-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px 5px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.theme-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.theme-btn .theme-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ── Grid principal ──────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panel {
+  background: var(--surface);
+  padding: 1.5rem;
+}
+
+.panel.full {
+  grid-column: 1 / -1;
+}
+
+.panel.results {
+  background: var(--surface2);
+}
+
+.panel-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Botões de modo de cálculo ───────────────────────── */
+.calc-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.calc-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.calc-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.calc-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ── Campos de dados ─────────────────────────────────── */
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.field label .target-indicator {
+  color: var(--accent);
+  margin-left: 4px;
+}
+
+.field input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field input:focus {
+  border-color: var(--accent2);
+}
+
+.field input.target {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface2));
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--accent);
+}
+
+.field input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.field .suffix {
+  display: flex;
+  align-items: center;
+}
+
+.field .suffix input {
+  border-radius: 6px 0 0 6px;
+  flex: 1;
+}
+
+.field .suffix span {
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-left: none;
+  padding: 10px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  border-radius: 0 6px 6px 0;
+  white-space: nowrap;
+}
+
+/* ── Toggle de entrada ───────────────────────────────── */
+.entrada-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.entrada-row label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  flex: 1;
+  margin: 0;
+}
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  background: var(--border2);
+  border-radius: 10px;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle.on {
+  background: var(--accent);
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+}
+
+.toggle.on::after {
+  transform: translateX(16px);
+}
+
+.entrada-field {
+  margin-top: -8px;
+  margin-bottom: 1rem;
+}
+
+.entrada-field.hidden {
+  display: none;
+}
+
+/* ── Botões de ação ──────────────────────────────────── */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #000;
+}
+
+.btn.primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn.primary:active {
+  transform: scale(0.98);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+
+.btn.secondary:hover {
+  border-color: var(--text2);
+  color: var(--text);
+}
+
+.btn.danger {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--red) 40%, transparent);
+  color: var(--red);
+}
+
+.btn.danger:hover {
+  background: color-mix(in srgb, var(--red) 10%, transparent);
+}
+
+.btn.full {
+  grid-column: 1 / -1;
+}
+
+/* ── Painel de resultado ─────────────────────────────── */
+.result-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.result-card .result-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.result-card .result-value {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.result-mini {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.result-mini .mini-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.result-mini .mini-value {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ── Mensagem de erro ────────────────────────────────── */
+.error-msg {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--red);
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--red) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  border-radius: 6px;
+  margin-top: 1rem;
+  display: none;
+}
+
+.error-msg.visible {
+  display: block;
+}
+
+/* ── Tabela de simulação ─────────────────────────────── */
+.table-section {
+  margin-top: 1rem;
+}
+
+.table-toggle {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s;
+}
+
+.table-toggle:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.table-toggle .arrow {
+  transition: transform 0.2s;
+}
+
+.table-toggle.open .arrow {
+  transform: rotate(180deg);
+}
+
+.amort-table-wrap {
+  display: none;
+  margin-top: 8px;
+  overflow: auto;
+  max-height: 360px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.amort-table-wrap.visible {
+  display: block;
+}
+
+.amort-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+.amort-table th {
+  background: var(--surface2);
+  color: var(--text3);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  text-align: right;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+  width: 33.33%;
+}
+
+.amort-table th:first-child {
+  text-align: center;
+  width: 20%;
+}
+
+.amort-table th:nth-child(2) {
+  width: 40%;
+}
+
+.amort-table th:last-child {
+  width: 40%;
+}
+
+.amort-table td {
+  padding: 7px 16px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+}
+
+.amort-table td:first-child {
+  text-align: center;
+  color: var(--text3);
+  font-size: 12px;
+}
+
+.amort-table tr:last-child td {
+  border-bottom: none;
+}
+
+.amort-table tr:hover td {
+  background: var(--surface2);
+}
+
+/* ── Modal de ajuda ──────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+  border-color: var(--text2);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 72vh;
+  overflow-y: auto;
+}
+
+.help-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.help-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.help-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.help-text strong {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.help-text p {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.help-section-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.help-section-title:first-child {
+  margin-top: 0;
+}
+
+.help-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.modal-footer p {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  line-height: 1.7;
+}
+
+.modal-footer strong {
+  color: var(--text2);
+  font-weight: 500;
+}
+
+/* ── Rodapé (relógio) ────────────────────────────────── */
+.footer-clock {
+  text-align: right;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+
+/* ── Responsivo ──────────────────────────────────────── */
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 1.25rem;
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .btn.full {
+    grid-column: 1;
+  }
+}

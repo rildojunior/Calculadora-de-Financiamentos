@@ -3,7 +3,7 @@
 ## Carregamento
 
 `index.html` carrega, nesta ordem: `styles.css` (que importa as fontes IBM Plex Mono/Sans do
-Google Fonts) → `script.js` → `juros.js`. Não há módulos ES: tudo é script clássico com
+Google Fonts) → `script.js` → `juros.js` → `pwa.js` (service worker; ver [pwa.md](pwa.md)). Não há módulos ES: tudo é script clássico com
 funções e constantes no escopo global.
 
 - `script.js` declara `fmt` e `parse` com `const` no escopo global. `juros.js` **usa** essas
@@ -18,7 +18,7 @@ funções e constantes no escopo global.
 
 ```
 .app
-├── .header           h1 "Calculadora Financeira", .version "v2.0", botão de tema (#themeToggle)
+├── .header           h1 "Calculadora Financeira", .version "v2.1", botão de tema (#themeToggle)
 ├── .tabs             botões .tab-btn com data-section="secFinanciamento" | "secJuros"
 ├── section#secFinanciamento        (visível por padrão)
 │   └── .grid → painel de dados, painel .results (#resultArea), painel #tablePanel (Tabela Price)

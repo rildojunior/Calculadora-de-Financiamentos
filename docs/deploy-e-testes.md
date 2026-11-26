@@ -4,7 +4,11 @@
 
 ```bash
 node tests/juros.test.js
+node tests/versao.test.js
 ```
+
+`versao.test.js` confere que `APP_VERSION` do `sw.js` é igual às 3 versões do `index.html` e
+que todo arquivo listado no cache do service worker existe.
 
 Sem dependências (usa `assert` do Node). Cobrem a função pura de juros: os casos de
 referência de `juros.md`, a contagem de dias, o formato do resultado, `jrHoje` e as
@@ -43,6 +47,8 @@ O Financiamento (`script.js`) não tem testes automatizados: é conferido no nav
    inicial, validações, Limpar, Enter, modal de ajuda próprio.
 4. Trocar de aba não apaga dados de nenhuma das duas.
 5. Mobile (375 px): uma coluna; as datas ficam empilhadas.
+6. PWA: o service worker registra e o cache `calculadora-financeira-vX.Y` tem a versão nova
+   (ver [pwa.md](pwa.md)).
 
 ## Git e GitHub
 

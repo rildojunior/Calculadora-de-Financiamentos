@@ -57,3 +57,16 @@ foi substituído. Ao tomar uma decisão nova, acrescente no fim.
 - **D16 — Enforce HTTPS ligado** no GitHub Pages (o certificado já estava aprovado).
 - **D17 — Documentação de referência** em `CLAUDE.md` (índice, lido automaticamente pelo
   Claude Code) e em `docs/*.md` por assunto, para que uma nova sessão leia só o necessário.
+
+## v2.1 — PWA (26/11/2026)
+
+- **D18 — App instalável (PWA)**, no mesmo padrão dos outros projetos do usuário
+  (`provacafe_consulta`): `manifest.json`, `sw.js` com cache dos estáticos (cache-first) e
+  das fontes Google, ícones em `icons/` gerados a partir do `favicon.svg`. Registro em
+  `pwa.js` (arquivo próprio, `script.js` intocado).
+- **D19 — Versão sobe a cada atualização publicada** (pedido do usuário), para forçar os
+  apps instalados a atualizar. Versão única: `APP_VERSION` no `sw.js` = versão exibida no
+  `index.html`; o nome do cache deriva dela. `tests/versao.test.js` impede que fiquem
+  diferentes. Atualização forçada: `updateViaCache: 'none'`, nova verificação a cada volta
+  do app para a tela, `skipWaiting` + `clients.claim` e recarga automática da página no
+  `controllerchange` (perde campos preenchidos nesse momento — aceitável numa calculadora).

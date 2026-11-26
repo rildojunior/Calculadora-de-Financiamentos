@@ -741,3 +741,61 @@ body {
     grid-column: 1;
   }
 }
+
+/* ── Abas ────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin: -0.75rem 0 1rem;
+}
+
+.tab-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ── Cálculo de Juros ────────────────────────────────── */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.field input[type='date'] {
+  color-scheme: dark;
+  min-height: 42px;
+}
+
+:root.light .field input[type='date'] {
+  color-scheme: light;
+}
+
+@media (max-width: 560px) {
+  .tabs .tab-btn {
+    flex: 1;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

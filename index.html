@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora de Financiamentos</title>
+    <title>Calculadora Financeira</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -13,14 +13,21 @@
 
       <!-- ── Cabeçalho ──────────────────────────────────────────────────── -->
       <div class="header">
-        <h1>Calculadora de Financiamento</h1>
-        <span class="version">v1.0</span>
+        <h1>Calculadora Financeira</h1>
+        <span class="version">v2.0</span>
         <button class="theme-btn" id="themeToggle">
           <span class="theme-icon" id="themeIcon">🌙</span>
           <span id="themeLabel">Claro</span>
         </button>
       </div>
 
+      <!-- ── Abas ───────────────────────────────────────────────────────── -->
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-section="secFinanciamento">Financiamento</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-section="secJuros">Juros</button>
+      </div>
+
+      <section id="secFinanciamento">
       <!-- ── Grid principal ─────────────────────────────────────────────── -->
       <div class="grid">
 
@@ -142,6 +149,62 @@
         </div>
 
       </div><!-- /.grid -->
+      </section><!-- /#secFinanciamento -->
+
+      <!-- ── Cálculo de Juros Bruto ─────────────────────────────────────── -->
+      <section id="secJuros" hidden>
+        <div class="grid">
+
+          <div class="panel">
+            <div class="panel-label">Cálculo de Juros Bruto</div>
+
+            <div class="field">
+              <label for="jrCapital">Capital</label>
+              <div class="suffix">
+                <input type="text" id="jrCapital" placeholder="0,00" inputmode="decimal" />
+                <span>R$</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="jrTaxa">Taxa de Juros</label>
+              <div class="suffix">
+                <input type="text" id="jrTaxa" placeholder="0,00" inputmode="decimal" />
+                <span>% a.m.</span>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="jrDataIni">Data inicial</label>
+                <input type="date" id="jrDataIni" />
+              </div>
+              <div class="field">
+                <label for="jrDataFim">Data final</label>
+                <input type="date" id="jrDataFim" />
+              </div>
+            </div>
+
+            <div id="jrErrorMsg" class="error-msg"></div>
+
+            <div class="actions">
+              <button class="btn primary full" id="jrBtnCalcular">Calcular</button>
+              <button class="btn danger"       id="jrBtnLimpar">Limpar</button>
+              <button class="btn secondary"    id="jrBtnAjuda">Ajuda</button>
+            </div>
+          </div>
+
+          <div class="panel results">
+            <div class="panel-label">Resultado</div>
+            <div id="jrResultArea">
+              <div style="color:var(--text3);font-family:var(--mono);font-size:13px;padding:2rem 0;text-align:center;">
+                Preencha os dados e<br>clique em Calcular
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.grid -->
+      </section><!-- /#secJuros -->
 
       <!-- Relógio -->
       <div class="footer-clock">
@@ -154,7 +217,7 @@
     <div class="modal-overlay" id="helpModal">
       <div class="modal">
         <div class="modal-header">
-          <h2>Ajuda — Calculadora de Financiamento v1.0</h2>
+          <h2>Ajuda — Calculadora Financeira v2.0</h2>
           <button class="modal-close" id="closeHelp">Fechar</button>
         </div>
 
@@ -255,6 +318,75 @@
       </div>
     </div>
 
+    <!-- ── Modal de ajuda: Juros ──────────────────────────────────────────── -->
+    <div class="modal-overlay" id="jrHelpModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Ajuda — Cálculo de Juros Bruto</h2>
+          <button class="modal-close" id="jrCloseHelp">Fechar</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="help-section-title">Como usar</div>
+
+          <div class="help-item">
+            <div class="help-icon">01</div>
+            <div class="help-text">
+              <strong>Informe os dados</strong>
+              <p>Preencha o Capital (R$), a Taxa de Juros mensal (% a.m.) e a Data
+                final. A Data inicial já vem preenchida com a data de hoje, mas pode
+                ser alterada. A Data final deve ser posterior à inicial.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon">02</div>
+            <div class="help-text">
+              <strong>Calcule</strong>
+              <p>Clique em "Calcular" ou pressione Enter. O painel mostra o Montante,
+                o Total de juros e os Dias corridos.</p>
+            </div>
+          </div>
+
+          <div class="help-section-title">Fórmula utilizada</div>
+
+          <div class="help-item">
+            <div class="help-icon" style="font-size:9px">DIA</div>
+            <div class="help-text">
+              <strong>Taxa diária equivalente</strong>
+              <p>Juros compostos diários, com mês comercial de 30 dias:
+                i<sub>d</sub> = (1 + i<sub>m</sub>)<sup>1/30</sup> − 1,
+                onde i<sub>m</sub> é a taxa mensal decimal.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon">n</div>
+            <div class="help-text">
+              <strong>Dias corridos</strong>
+              <p>n = Data final − Data inicial, em dias de calendário.</p>
+            </div>
+          </div>
+
+          <div class="help-item">
+            <div class="help-icon">M</div>
+            <div class="help-text">
+              <strong>Montante e juros</strong>
+              <p>M = C × (1 + i<sub>d</sub>)<sup>n</sup>, arredondado para cima no
+                centavo. Juros = M − C.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <p>
+            <strong>Calculadora Financeira</strong> v2.0
+          </p>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="juros.js"></script>
   </body>
 </html>

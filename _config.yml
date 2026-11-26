@@ -1,0 +1,7 @@
+# GitHub Pages (build "legacy"/Jekyll): arquivos do repositório que NÃO vão para o site.
+# O app em si não usa Jekyll; este arquivo existe só para esta exclusão.
+exclude:
+  - tests/
+  - docs/
+  - CLAUDE.md
+  - README.md

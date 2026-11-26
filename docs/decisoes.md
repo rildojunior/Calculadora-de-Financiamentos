@@ -70,3 +70,21 @@ foi substituído. Ao tomar uma decisão nova, acrescente no fim.
   diferentes. Atualização forçada: `updateViaCache: 'none'`, nova verificação a cada volta
   do app para a tela, `skipWaiting` + `clients.claim` e recarga automática da página no
   `controllerchange` (perde campos preenchidos nesse momento — aceitável numa calculadora).
+
+## v2.2 — Revisão de design no estilo Apple (26/11/2026)
+
+- **D20 — Ajustes de interação em arquivo próprio (`ui.js`)**, carregado depois de
+  `script.js` e `juros.js` e antes de `pwa.js`. A lógica do `script.js` continua intocada:
+  `ui.js` só acrescenta listeners que rodam depois dos originais.
+- **D21 — No celular (≤ 560px), depois de um cálculo com sucesso a página rola até o painel
+  de resultado** (que fica embaixo do formulário). Não rola quando há erro. Na aba Juros
+  escuta também o Enter, porque ali o Enter chama `jrCalcular()` direto.
+- **D22 — Campos com `font-size: 16px`** para o Safari do iOS não dar zoom ao focar.
+- **D23 — Textos pequenos com no mínimo 10–11px e cor `--text2`** (rótulos de resultado,
+  títulos de painel, cabeçalho da tabela, relógio) para legibilidade.
+- **D24 — Resposta ao pressionar em todos os botões** (`:active` com `scale(0.97)`),
+  `touch-action: manipulation`, foco visível (`:focus-visible`) e respeito a
+  `prefers-reduced-motion`.
+- **D25 — Interruptor de entrada virou `<button role="switch">`** com `aria-checked`
+  (sincronizado em `ui.js`). O `<label>` perdeu o `for`: com ele, um clique no rótulo
+  alternava duas vezes (o clique do label e o clique repassado ao botão sobem até a linha).

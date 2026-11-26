@@ -54,6 +54,7 @@ icons/              ícones PNG do PWA (180 apple-touch, 192, 512, maskable-512)
 styles.css          estilos e temas claro/escuro; regras novas ficam no fim do arquivo
 favicon.svg         ícone
 CNAME               domínio do GitHub Pages — não alterar
+README.md           apresentação do repositório no GitHub (fora do site)
 _config.yml         exclui tests/, docs/, CLAUDE.md e README.md do site publicado
 tests/juros.test.js testes da função pura de juros (Node, sem dependências)
 tests/versao.test.js confere a versão igual no sw.js e no index.html e os arquivos do cache

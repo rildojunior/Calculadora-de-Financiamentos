@@ -799,3 +799,102 @@ body {
     gap: 0;
   }
 }
+
+/* ── v2.2 — Revisão de design (resposta, legibilidade, acessibilidade) ── */
+
+/* Toque: sem atraso de 300ms e sem o realce cinza padrão do iOS
+   (o feedback de pressão abaixo substitui o realce) */
+button,
+.entrada-row {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Campos com 16px: abaixo disso o Safari do iOS dá zoom ao focar */
+.field input {
+  font-size: 16px;
+}
+
+/* Textos pequenos: tamanho mínimo de 11px e mais contraste */
+.panel-label,
+.result-card .result-label,
+.help-section-title {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.result-mini .mini-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text2);
+}
+
+.result-card .result-label,
+.amort-table th,
+.footer-clock {
+  color: var(--text2);
+}
+
+.amort-table th {
+  font-size: 11px;
+}
+
+.modal-footer p {
+  font-size: 11px;
+}
+
+/* Resposta imediata ao pressionar (no toque, não ao soltar) */
+.btn,
+.calc-btn,
+.tab-btn,
+.theme-btn,
+.table-toggle,
+.modal-close {
+  transition-property: background-color, border-color, color, filter, transform;
+  transition-duration: 0.15s;
+}
+
+.btn:active,
+.calc-btn:active,
+.tab-btn:active,
+.theme-btn:active,
+.table-toggle:active,
+.modal-close:active {
+  transform: scale(0.97);
+  transition-duration: 0.06s;
+}
+
+.entrada-row:active {
+  background: var(--border);
+}
+
+/* Interruptor de entrada agora é um <button role="switch"> */
+.toggle {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+}
+
+/* Foco visível para quem navega pelo teclado */
+.btn:focus-visible,
+.calc-btn:focus-visible,
+.tab-btn:focus-visible,
+.theme-btn:focus-visible,
+.table-toggle:focus-visible,
+.modal-close:focus-visible,
+.toggle:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active,
+  .calc-btn:active,
+  .tab-btn:active,
+  .theme-btn:active,
+  .table-toggle:active,
+  .modal-close:active {
+    transform: none;
+  }
+}

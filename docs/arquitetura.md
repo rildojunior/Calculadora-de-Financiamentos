@@ -18,13 +18,12 @@ funções e constantes no escopo global.
 
 ```
 .app
-├── .header           h1 "Calculadora Financeira", .version "v2.1", botão de tema (#themeToggle)
+├── .header           h1 "Calculadora Financeira", .version "vX.Y", botão de tema (#themeToggle)
 ├── .tabs             botões .tab-btn com data-section="secFinanciamento" | "secJuros"
 ├── section#secFinanciamento        (visível por padrão)
 │   └── .grid → painel de dados, painel .results (#resultArea), painel #tablePanel (Tabela Price)
 ├── section#secJuros [hidden]
 │   └── .grid → painel de dados (campos jr*), painel .results (#jrResultArea)
-└── .footer-clock     relógio (#clock), atualizado a cada segundo por script.js
 #helpModal            ajuda da calculadora de Financiamento (script.js)
 #jrHelpModal          ajuda da calculadora de Juros (juros.js)
 ```
@@ -37,8 +36,12 @@ resultado é apagado ao trocar de aba. A aba padrão é Financiamento.
 
 ## Tema claro/escuro
 
-Em `script.js`: o botão alterna a classe `light` em `<html>`. O padrão é **escuro** e o tema
-**não é salvo** (volta ao escuro ao recarregar). As cores são variáveis CSS em `:root`
+`script.js` alterna a classe `light` em `<html>` no clique do botão. Desde a v2.4:
+um `<script>` no `<head>` do `index.html` aplica o tema antes do primeiro desenho — a
+escolha salva em `localStorage` (`uiTema`) ou, sem escolha, o tema do sistema
+(`prefers-color-scheme`); `ui.js` mantém o botão mostrando o tema **atual**, salva a
+escolha, acompanha o sistema quando não há escolha e atualiza o `theme-color`. Escolher o
+mesmo tema do sistema apaga a escolha. As cores são variáveis CSS em `:root`
 (escuro) e `:root.light` (claro). Use sempre as variáveis (`--accent`, `--text2`,
 `--surface2` etc.) em estilos novos para funcionar nos dois temas.
 
@@ -68,7 +71,8 @@ As regras originais da v1.0 não foram alteradas.
   `resultArea`, `tablePanel`, `tableToggle`, `tableWrap`, `amortTable`, `amortBody`,
   `btnCalcular`, `btnTabela`, `btnLimpar`, `btnAjuda`, `helpModal`, `closeHelp`,
   `tgtFin`, `tgtTax`, `tgtMes`, `tgtPre`, `label*`, `field*`, `calcType`.
-- Gerais: `themeToggle`, `themeIcon`, `themeLabel`, `clock`, `secFinanciamento`, `secJuros`.
+- Gerais: `themeToggle`, `themeIcon`, `themeLabel`, `secFinanciamento`, `secJuros`.
+  (`clock` foi removido na v2.4.)
 - Juros (prefixo `jr`): `jrCapital`, `jrTaxa`, `jrDataIni`, `jrDataFim`, `jrErrorMsg`,
   `jrResultArea`, `jrBtnCalcular`, `jrBtnLimpar`, `jrBtnAjuda`, `jrHelpModal`, `jrCloseHelp`,
   `jrHelpTitle`.

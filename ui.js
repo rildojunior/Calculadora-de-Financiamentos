@@ -1,5 +1,5 @@
 /* =============================================
-   UI — ajustes de interação e movimento (v2.2 / v2.3)
+   UI — interação, movimento e tema (v2.2 a v2.4)
    Carregado DEPOIS de script.js e juros.js. Não altera a lógica de cálculo:
    só acrescenta listeners que rodam depois dos originais.
    ============================================= */
@@ -40,6 +40,40 @@
       if (e.key === 'Enter') mostrarResultado('jrResultArea', 'jrErrorMsg')
     })
   })
+
+  /* ── Tema (v2.4) ────────────────────────────────────────────────────────
+     O <head> já aplicou a escolha salva ou o tema do sistema antes do primeiro
+     desenho. Aqui: o botão mostra o tema ATUAL (ícone e texto concordam), a
+     escolha fica salva e, sem escolha salva, o app acompanha o sistema.
+     Escolher o mesmo tema do sistema apaga a escolha: volta a ser automático. */
+  const raiz = document.documentElement
+  const sistemaClaro = window.matchMedia('(prefers-color-scheme: light)')
+  const metaCor = document.querySelector('meta[name="theme-color"]')
+  const lerTema = () => { try { return localStorage.getItem('uiTema') } catch (_) { return null } }
+
+  function aplicarTema(claro) {
+    isLight = claro // variável global de script.js, usada pelo clique do botão
+    raiz.classList.toggle('light', claro)
+    $('themeIcon').textContent = claro ? '☀️' : '🌙'
+    $('themeLabel').textContent = claro ? 'Claro' : 'Escuro'
+    const dica = `Tema ${claro ? 'claro' : 'escuro'}. Toque para usar o ${claro ? 'escuro' : 'claro'}`
+    $('themeToggle').setAttribute('aria-label', dica)
+    $('themeToggle').title = dica
+    metaCor.content = claro ? '#f0f2f7' : '#0f1117' // barra de status / navegador
+  }
+  aplicarTema(raiz.classList.contains('light'))
+
+  // script.js já alternou a classe no clique; este listener roda depois dele
+  $('themeToggle').addEventListener('click', () => {
+    const claro = raiz.classList.contains('light')
+    aplicarTema(claro)
+    try {
+      if (claro === sistemaClaro.matches) localStorage.removeItem('uiTema')
+      else localStorage.setItem('uiTema', claro ? 'claro' : 'escuro')
+    } catch (_) {}
+  })
+
+  sistemaClaro.addEventListener('change', e => { if (!lerTema()) aplicarTema(e.matches) })
 
   // ── Resultado novo: destaque rápido para mostrar que algo mudou (v2.3) ──
   // script.js e juros.js trocam o innerHTML da área; o observer marca os blocos novos.

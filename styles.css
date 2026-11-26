@@ -710,15 +710,6 @@ body {
   font-weight: 500;
 }
 
-/* ── Rodapé (relógio) ────────────────────────────────── */
-.footer-clock {
-  text-align: right;
-  margin-top: 1rem;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-}
-
 /* ── Responsivo ──────────────────────────────────────── */
 @media (max-width: 560px) {
   .grid {
@@ -830,8 +821,7 @@ button,
 }
 
 .result-card .result-label,
-.amort-table th,
-.footer-clock {
+.amort-table th {
   color: var(--text2);
 }
 
@@ -1073,5 +1063,46 @@ html.ui-modal-open body {
 
   .result-card.ui-pop {
     animation-name: ui-fade;
+  }
+}
+
+/* ── v2.4 — Tema, materiais e iPhone ─────────────────────────────────── */
+
+/* iPhone (viewport-fit=cover): o conteúdo respeita o recorte da câmera e a
+   barra inferior, sem encostar nas bordas */
+body {
+  padding:
+    max(2rem, calc(env(safe-area-inset-top) + 1rem))
+    max(1rem, calc(env(safe-area-inset-right) + 1rem))
+    max(2rem, calc(env(safe-area-inset-bottom) + 1rem))
+    max(1rem, calc(env(safe-area-inset-left) + 1rem));
+}
+
+/* Fundo do modal: material desfocado em vez de só escurecer. A camada surge e
+   some junto com a opacidade do overlay, então o desfoque "materializa". */
+.modal-overlay {
+  background: rgb(0 0 0 / calc(0.45 * var(--ui-scrim, 1)));
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+:root.light .modal-overlay {
+  background: rgb(20 28 45 / calc(0.32 * var(--ui-scrim, 1)));
+}
+
+@media (max-width: 560px) {
+  /* Folha no celular: o rodapé passa por baixo da barra inferior do iPhone */
+  .modal-footer {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Transparência reduzida: sem desfoque, escurecimento mais forte */
+@media (prefers-reduced-transparency: reduce) {
+  .modal-overlay,
+  :root.light .modal-overlay {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgb(0 0 0 / calc(0.7 * var(--ui-scrim, 1)));
   }
 }

@@ -5,8 +5,10 @@
 - `manifest.json` — nome "Calculadora Financeira" (curto: "Calculadora"), `display:
   standalone`, retrato, cores `#0f1117` (fundo do tema escuro), ícones de `icons/` + `favicon.svg`.
 - `index.html` — `<link rel="manifest">`, `apple-touch-icon` (`icons/icon-180.png`),
-  `theme-color` e metas `apple-mobile-web-app-*` (barra de status `black`, não translucent,
-  para o conteúdo não ficar embaixo dela no iPhone).
+  `theme-color` (atualizado pelo tema, ver `ui.js`), `viewport-fit=cover` e metas
+  `apple-mobile-web-app-*` (barra de status `default` desde a v2.4, para acompanhar o
+  `theme-color`; antes `black`). Margens com `env(safe-area-inset-*)` no `styles.css`. O iOS
+  lê as metas `apple-*` na instalação: mudanças nelas podem pedir reinstalar o app.
 - `icons/` — `icon-192.png` e `icon-512.png` (cantos arredondados, iguais ao favicon),
   `icon-180.png` (quadrado cheio, o iOS arredonda) e `maskable-512.png` (calculadora em 72%,
   dentro da zona segura). Gerados renderizando o desenho do `favicon.svg` no Chrome headless.

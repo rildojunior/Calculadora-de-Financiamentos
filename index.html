@@ -22,7 +22,7 @@
       <!-- ── Cabeçalho ──────────────────────────────────────────────────── -->
       <div class="header">
         <h1>Calculadora Financeira</h1>
-        <span class="version">v2.2</span>
+        <span class="version">v2.3</span>
         <button class="theme-btn" id="themeToggle">
           <span class="theme-icon" id="themeIcon">🌙</span>
           <span id="themeLabel">Claro</span>
@@ -223,9 +223,9 @@
 
     <!-- ── Modal de ajuda ─────────────────────────────────────────────────── -->
     <div class="modal-overlay" id="helpModal">
-      <div class="modal">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="uiHelpTitle">
         <div class="modal-header">
-          <h2>Ajuda — Calculadora Financeira v2.2</h2>
+          <h2 id="uiHelpTitle">Ajuda — Calculadora Financeira v2.3</h2>
           <button class="modal-close" id="closeHelp">Fechar</button>
         </div>
 
@@ -328,9 +328,9 @@
 
     <!-- ── Modal de ajuda: Juros ──────────────────────────────────────────── -->
     <div class="modal-overlay" id="jrHelpModal">
-      <div class="modal">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="jrHelpTitle">
         <div class="modal-header">
-          <h2>Ajuda — Cálculo de Juros Bruto</h2>
+          <h2 id="jrHelpTitle">Ajuda — Cálculo de Juros Bruto</h2>
           <button class="modal-close" id="jrCloseHelp">Fechar</button>
         </div>
 
@@ -388,7 +388,7 @@
 
         <div class="modal-footer">
           <p>
-            <strong>Calculadora Financeira</strong> v2.2
+            <strong>Calculadora Financeira</strong> v2.3
           </p>
         </div>
       </div>

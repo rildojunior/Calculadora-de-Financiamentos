@@ -88,3 +88,24 @@ foi substituído. Ao tomar uma decisão nova, acrescente no fim.
 - **D25 — Interruptor de entrada virou `<button role="switch">`** com `aria-checked`
   (sincronizado em `ui.js`). O `<label>` perdeu o `for`: com ele, um clique no rótulo
   alternava duas vezes (o clique do label e o clique repassado ao botão sobem até a linha).
+
+## v2.3 — Modais e movimento (26/11/2026)
+
+- **D26 — Modais sempre montados, com `visibility`/`opacity` em vez de `display: none`.**
+  `script.js` e `juros.js` continuam só trocando `.visible`; assim o CSS consegue animar a
+  entrada e a saída. Um `MutationObserver` em `ui.js` reage à troca, venha de onde vier.
+- **D27 — Comportamento de diálogo:** Esc fecha; o foco vai para o "Fechar" ao abrir e
+  volta ao botão Ajuda ao fechar; `.app` fica `inert` (foco preso no modal); a rolagem da
+  página trava (`html.ui-modal-open`). `role="dialog"`, `aria-modal` e `aria-labelledby`
+  (`uiHelpTitle`, `jrHelpTitle`).
+- **D28 — Computador: o modal cresce a partir do botão Ajuda** (`--ui-origin` calculado
+  em `ui.js`) e volta para ele ao fechar.
+- **D29 — Celular (≤ 560px): o modal é uma folha que sobe de baixo** e pode ser arrastada
+  pelo cabeçalho para fechar. Arrasto 1:1 com tolerância de 10px (um toque no "Fechar"
+  continua sendo toque), resistência elástica para cima, projeção de momento
+  (desaceleração 0,99) para decidir entre fechar e voltar, e mola com os parâmetros da
+  Apple (amortecimento 1 / resposta 0,3 s; 0,8 ao voltar com impulso) partindo da
+  velocidade do dedo. Gestos usam mola em JS; aberturas por botão usam transição CSS.
+- **D30 — Tabela Price e campo de entrada abrem e fecham com transição** (altura +
+  opacidade) em vez de aparecer de uma vez. **Resultado novo ganha um destaque curto**
+  (`.ui-pop`). Com `prefers-reduced-motion`, tudo vira esmaecimento curto, sem deslizes.

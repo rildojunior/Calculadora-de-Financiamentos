@@ -6,7 +6,7 @@
 // VERSÃO DO APP — incrementar a CADA atualização publicada.
 // Tem que ser igual à versão exibida no index.html (o teste tests/versao.test.js confere).
 // Mudar este arquivo é o que faz os apps instalados baixarem a versão nova.
-const APP_VERSION = 'v2.2'
+const APP_VERSION = 'v2.3'
 const CACHE_NAME = 'calculadora-financeira-' + APP_VERSION
 
 const STATIC_FILES = [

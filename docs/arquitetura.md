@@ -54,7 +54,7 @@ nativo acompanhe o tema.
 - `.btn.primary | .secondary | .danger`, `.btn.full` (ocupa a linha), dentro de `.actions`
 - `.result-card` (valor em destaque), `.result-grid` + `.result-mini` (valores secundários)
 - `.error-msg` (+ `.visible` para mostrar)
-- `.modal-overlay` (+ `.visible`), `.modal`, `.help-item`, `.help-icon`, `.help-section-title`
+- `.modal-overlay` (+ `.visible`; desde a v2.3 fica sempre montado e anima via `visibility`/`opacity` — ver `ui.js`), `.modal`, `.help-item`, `.help-icon`, `.help-section-title`
 - `.calc-btn` — **exclusivo** dos botões de modo do Financiamento (ver regras no CLAUDE.md)
 - `.tab-btn` — abas
 
@@ -70,7 +70,10 @@ As regras originais da v1.0 não foram alteradas.
   `tgtFin`, `tgtTax`, `tgtMes`, `tgtPre`, `label*`, `field*`, `calcType`.
 - Gerais: `themeToggle`, `themeIcon`, `themeLabel`, `clock`, `secFinanciamento`, `secJuros`.
 - Juros (prefixo `jr`): `jrCapital`, `jrTaxa`, `jrDataIni`, `jrDataFim`, `jrErrorMsg`,
-  `jrResultArea`, `jrBtnCalcular`, `jrBtnLimpar`, `jrBtnAjuda`, `jrHelpModal`, `jrCloseHelp`.
+  `jrResultArea`, `jrBtnCalcular`, `jrBtnLimpar`, `jrBtnAjuda`, `jrHelpModal`, `jrCloseHelp`,
+  `jrHelpTitle`.
+- Interação (`ui.js`, prefixo `ui`): `uiHelpTitle`; classes `ui-pop`, `ui-modal-open`;
+  variáveis CSS `--ui-origin`, `--ui-scrim`; `entradaToggleLabel` (v2.2).
 
 ## Rodapé do modal de Financiamento
 

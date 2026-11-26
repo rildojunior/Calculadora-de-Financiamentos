@@ -898,3 +898,180 @@ button,
     transform: none;
   }
 }
+
+/* ── v2.3 — Modais e movimento ───────────────────────────────────────── */
+
+/* Trava a rolagem da página enquanto um modal está aberto (ui.js) */
+html.ui-modal-open,
+html.ui-modal-open body {
+  overflow: hidden;
+}
+
+/* Modal: sempre montado, entra e sai com transição em vez de aparecer de uma vez.
+   script.js e juros.js continuam só trocando a classe .visible. */
+.modal-overlay {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  /* --ui-scrim (0–1) acompanha o arrasto da folha no celular */
+  background: rgb(0 0 0 / calc(0.62 * var(--ui-scrim, 1)));
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+}
+
+.modal-overlay.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.2s ease, visibility 0s;
+}
+
+/* Computador: o modal cresce a partir do botão Ajuda (--ui-origin vem do ui.js)
+   e volta para ele ao fechar */
+.modal {
+  transform-origin: var(--ui-origin, 50% 50%);
+  transform: scale(0.85);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.modal-overlay.visible .modal {
+  transform: none;
+}
+
+/* Celular: folha que sobe de baixo, com alça para arrastar e fechar */
+@media (max-width: 560px) {
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    max-width: none;
+    max-height: 92dvh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+    transform: translateY(100%);
+    transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .modal-body {
+    max-height: none;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .modal-header {
+    position: relative;
+    padding-top: 1.6rem;
+    touch-action: none; /* o arrasto do cabeçalho não rola a página */
+    cursor: grab;
+  }
+
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 36px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--border2);
+    transform: translateX(-50%);
+  }
+}
+
+/* Tabela Price: abre e fecha deslizando em vez de aparecer de uma vez */
+.amort-table-wrap {
+  display: block;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  border-width: 0;
+  transition: max-height 0.32s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.32s,
+    opacity 0.2s ease, border-width 0.32s, visibility 0s linear 0.32s;
+}
+
+.amort-table-wrap.visible {
+  max-height: 360px;
+  margin-top: 8px;
+  opacity: 1;
+  visibility: visible;
+  overflow: auto;
+  border-width: 1px;
+  transition: max-height 0.32s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.32s,
+    opacity 0.2s ease, border-width 0.32s, visibility 0s;
+}
+
+/* Campo de entrada: abre e fecha a partir do interruptor */
+.entrada-field {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition: grid-template-rows 0.3s cubic-bezier(0.25, 1, 0.5, 1), margin 0.3s,
+    opacity 0.2s ease, visibility 0s;
+}
+
+.entrada-field > .field {
+  min-height: 0;
+  overflow: hidden;
+  transition: margin 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.entrada-field.hidden {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.3s cubic-bezier(0.25, 1, 0.5, 1), margin 0.3s,
+    opacity 0.15s ease, visibility 0s linear 0.3s;
+}
+
+.entrada-field.hidden > .field {
+  margin-bottom: 0;
+}
+
+/* Resultado novo: destaque curto (classe .ui-pop posta pelo ui.js) */
+@keyframes ui-pop {
+  from { opacity: 0.35; transform: scale(0.98); }
+  to   { opacity: 1;    transform: none; }
+}
+
+@keyframes ui-fade {
+  from { opacity: 0.35; }
+  to   { opacity: 1; }
+}
+
+.result-card.ui-pop {
+  animation: ui-pop 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.result-grid.ui-pop {
+  animation: ui-fade 0.3s ease 0.04s both;
+}
+
+/* Movimento reduzido: troca deslizes e escalas por esmaecimentos curtos */
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal-overlay.visible .modal {
+    transform: none;
+    transition: none;
+  }
+
+  .amort-table-wrap,
+  .amort-table-wrap.visible,
+  .entrada-field,
+  .entrada-field.hidden,
+  .entrada-field > .field {
+    transition: opacity 0.15s ease, visibility 0s;
+  }
+
+  .result-card.ui-pop {
+    animation-name: ui-fade;
+  }
+}

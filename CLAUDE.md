@@ -6,7 +6,7 @@ Funciona também como **PWA** (instalável e offline).
 
 - Produção: https://calculadorafinanciamento.rildo.dev (GitHub Pages, branch `main`, raiz)
 - Repositório: `rildojunior/Calculadora-de-Financiamentos` (público)
-- Versão atual: **v2.3** — fica em `APP_VERSION` no `sw.js` e em 3 lugares do `index.html`
+- Versão atual: **v2.4** — fica em `APP_VERSION` no `sw.js` e em 3 lugares do `index.html`
   (cabeçalho, título e rodapé do modal de ajuda)
 - Idioma da interface e da documentação: português (pt-BR)
 
@@ -37,7 +37,7 @@ Funciona também como **PWA** (instalável e offline).
 9. Ao tomar uma decisão nova sobre o projeto, registrar em [docs/decisoes.md](docs/decisoes.md).
 10. **Toda atualização publicada sobe a versão** — sem exceção, mesmo correção pequena de
     texto ou CSS. Trocar `APP_VERSION` em `sw.js` **e** as 3 ocorrências no `index.html`
-    (v2.3 → v2.4…; o primeiro número só sobe em mudança grande). É a mudança no `sw.js` que
+    (v2.4 → v2.5…; o primeiro número só sobe em mudança grande). É a mudança no `sw.js` que
     força os apps instalados a baixar a versão nova. Rodar `node tests/versao.test.js`
     antes do commit. Arquivo novo que o site usa entra em `STATIC_FILES` no `sw.js`.
 
@@ -45,9 +45,9 @@ Funciona também como **PWA** (instalável e offline).
 
 ```
 index.html          estrutura das duas telas, abas e dois modais de ajuda
-script.js           calculadora de Financiamento + tema + relógio (define fmt/parse globais)
+script.js           calculadora de Financiamento + clique do tema (define fmt/parse globais)
 juros.js            calculadora de Juros (carregado DEPOIS de script.js)
-ui.js               interação e movimento: modais (Esc, foco, folha arrastável), destaques, rolar até o resultado
+ui.js               interação, movimento e tema: modais (Esc, foco, folha arrastável), tema salvo/do sistema, destaques
 pwa.js              registro do service worker e recarga ao atualizar (carregado por último)
 sw.js               service worker: cache offline; APP_VERSION = versão do app
 manifest.json       manifesto do PWA (nome, ícones, cores, standalone)

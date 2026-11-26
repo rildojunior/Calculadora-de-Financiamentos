@@ -293,17 +293,6 @@ function formatCurrency(inp) {
   inp.addEventListener('focus', () => { if (!inp.value) inp.placeholder = '0,00' })
 })
 
-// ── Relógio ───────────────────────────────────────────────────────────────────
-function updateClock() {
-  const now = new Date()
-  const pad = x => String(x).padStart(2, '0')
-  document.getElementById('clock').textContent =
-    `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()} ` +
-    `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
-}
-updateClock()
-setInterval(updateClock, 1000)
-
 // ── Toggle de tema ────────────────────────────────────────────────────────────
 document.getElementById('themeToggle').addEventListener('click', () => {
   isLight = !isLight

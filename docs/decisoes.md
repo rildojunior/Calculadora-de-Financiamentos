@@ -109,3 +109,24 @@ foi substituído. Ao tomar uma decisão nova, acrescente no fim.
 - **D30 — Tabela Price e campo de entrada abrem e fecham com transição** (altura +
   opacidade) em vez de aparecer de uma vez. **Resultado novo ganha um destaque curto**
   (`.ui-pop`). Com `prefers-reduced-motion`, tudo vira esmaecimento curto, sem deslizes.
+
+## v2.4 — Tema, materiais e iPhone (26/11/2026)
+
+- **D31 — O tema segue o sistema e a escolha fica salva.** Um `<script>` no `<head>`
+  aplica, antes do primeiro desenho (sem piscar), a escolha salva em `localStorage`
+  (`uiTema` = `claro`/`escuro`) ou, sem escolha, o `prefers-color-scheme`. Sem escolha
+  salva, o app acompanha o sistema ao vivo. Escolher no botão o mesmo tema do sistema apaga
+  a escolha (volta a ser automático). Substitui a regra antiga "padrão escuro, não salva".
+- **D32 — O botão de tema mostra o tema atual** (ícone e texto concordam: 🌙 Escuro /
+  ☀️ Claro), com `aria-label`/`title` dizendo o que o toque faz. Antes o ícone mostrava o
+  atual e o texto o destino. Feito em `ui.js`, que sincroniza a variável global `isLight`
+  do `script.js` (o clique original continua alternando a classe).
+- **D33 — Fundo dos modais desfocado** (`backdrop-filter: blur(8px)`) com escurecimento
+  mais leve; com `prefers-reduced-transparency`, sem desfoque e mais escuro.
+- **D34 — iPhone:** `viewport-fit=cover` + margens com `env(safe-area-inset-*)` (corpo da
+  página e rodapé da folha de ajuda). Barra de status `default` (antes `black`) e
+  `theme-color` atualizado com o tema, para a barra acompanhar claro/escuro no app
+  instalado. O iOS lê as metas `apple-*` na instalação: pode ser preciso reinstalar o app.
+- **D35 — Relógio do rodapé removido** (pedido do usuário: não tinha função). Saíram o
+  HTML, o CSS e a função `updateClock`/`setInterval` do `script.js` — mudança autorizada,
+  fora da lógica de cálculo.
